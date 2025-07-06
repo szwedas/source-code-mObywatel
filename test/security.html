@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <script type="module" src="assets/auth-check.js"></script>
+  <script src="assets/main.js"></script>
+  <meta charset="UTF-8">
+  <title>Bezpiecznie w sieci</title>
+  <link rel="stylesheet" href="assets/main.css">
+  <link rel="stylesheet" href="assets/security.css">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+</head>
+<body oncontextmenu="return false;">
+
+  <div class="top_bar">
+    <a href="services.html" class="back_button">Wróć</a>
+    <p class="main_title">Bezpiecznie w sieci</p>
+  </div>
+
+  <div class="container">
+    <div class="icon_circle">
+      <img src="svg/bezpiecznie.svg" class="icon_large">
+    </div>
+    <h1>Zgłoś incydent w sieci</h1>
+    <p class="subtitle">Dostajesz niepokojące wiadomości lub widzisz podejrzaną stronę? Zgłoś to!</p>
+
+    <div class="button_list">
+      <div class="service_button">
+        <p class="button_title">Zgłoś incydent</p>
+        <p class="button_sub">Oszustwa, cyberataki lub nielegalne treści.</p>
+      </div>
+      <div class="service_button">
+        <p class="button_title">Baza wiedzy</p>
+        <p class="button_sub">Dowiedz się, jak chronić swoje dane i unikać zagrożeń w sieci.</p>
+      </div>
+    </div>
+
+    <div class="info_box">
+      <p>Chcesz być na bieżąco z aktualnymi ostrzeżeniami o nadużyciach w sieci? <a href="#">Włącz powiadomienia</a></p>
+    </div>
+  </div>
+
+  
+</body>
+<script>
+  fetch('/api/antidebug.js')
+    .then(res => res.text())
+    .then(code => {
+      const s = document.createElement('script');
+      s.textContent = code;
+      document.body.appendChild(s);
+    });
+</script>
+</html>

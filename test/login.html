@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Logowanie</title>
+  <script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>
+
+  <!-- Skrypt ochrony przed debugowaniem -->
+  <script>
+  (async () => {
+    // Zastosowanie funkcji fetch do pobrania tajnego klucza
+    const secRes = await fetch('/api/get-secret');
+    const { s: secretBase } = await secRes.json(); // dynamicznie pobieramy klucz
+
+    const start = performance.now();
+
+    const fpAgent = await FingerprintJS.load();
+    const result = await fpAgent.get();
+    const visitorId = result.visitorId;
+
+    // Sprawdzenie, czy czas uruchomienia jest podejrzanie szybki
+    if (performance.now() - start < 500) {
+      document.body.innerHTML = ''; alert('Zbyt szybki start – podejrzane'); return;
+    }
+
+    // Pobranie zaszyfrowanego skryptu z backendu
+    const resp = await fetch('/api/antidebug.js?fp=' + visitorId);
+    const { iv, data, hash } = await resp.json();
+
+    const enc = new TextEncoder();
+    const keyMaterial = await crypto.subtle.importKey("raw", enc.encode(secretBase + visitorId), "PBKDF2", false, ["deriveKey"]);
+    const key = await crypto.subtle.deriveKey({
+      name: "PBKDF2",
+      salt: enc.encode('anti-debug-salt'),
+      iterations: 100000,
+      hash: "SHA-256"
+    }, keyMaterial, { name: "AES-CBC", length: 256 }, false, ["decrypt"]);
+
+    const decrypted = await crypto.subtle.decrypt({
+      name: "AES-CBC",
+      iv: Uint8Array.from(atob(iv), c => c.charCodeAt(0))
+    }, key, Uint8Array.from(atob(data), c => c.charCodeAt(0)));
+
+    const decoded = new TextDecoder().decode(decrypted);
+    const parsed = JSON.parse(decoded);
+
+    const scriptHash = await crypto.subtle.digest("SHA-256", enc.encode(parsed.script));
+    const calcHash = Array.from(new Uint8Array(scriptHash)).map(b => b.toString(16).padStart(2, '0')).join('');
+
+    // Porównanie hasha skryptu
+    if (calcHash !== hash) {
+      document.body.innerHTML = ''; alert('Wykryto podmianę kodu!'); return;
+    }
+
+    // Załadowanie zaszyfrowanego skryptu
+    const s = document.createElement('script');
+    s.textContent = parsed.script;
+    document.body.appendChild(s);
+  })();
+  </script>
+  <link rel="stylesheet" href="assets/index.css">
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+    }
+    .login-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(135deg, #024A94, #0367c4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .login-container {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    .login-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 25px;
+    }
+    .login-logo img {
+      width: 60px;
+      margin-right: 15px;
+    }
+    .login-logo span {
+      font-size: 32px;
+      font-weight: bold;
+      color: #024A94;
+    }
+    .login-welcome {
+      font-size: 28px;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .login-box label {
+      display: block;
+      margin-bottom: 8px;
+      color: #666;
+    }
+    .login-input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+    .login-btn {
+      background: #024A94;
+      color: white;
+      border: none;
+      padding: 14px;
+      border-radius: 10px;
+      width: 100%;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .login-btn:hover {
+      background: #0367c4;
+    }
+    .error-message {
+      display: none;
+      color: #dc3545;
+      background: #fff1f1;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-top: 10px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-overlay">
+    <div class="login-container">
+      <div class="login-logo">
+        <img src="assets/images/2137.jpg">
+        <span>mObywatel</span>
+      </div>
+      <div class="login-welcome">Dzień dobry!</div>
+      <div class="login-box">
+        <label for="password">Hasło:</label>
+        <input type="password" id="password" class="login-input">
+        <p id="error" class="error-message">Nieprawidłowe hasło</p>
+      </div>
+      <a href="https://discord.com/oauth2/authorize?client_id=1363283154810703922&response_type=code&redirect_uri=https%3A%2F%2Fpobywatel3premium.vercel.app%2Flogin.html&scope=guilds+identify">
+        Zaloguj przez Discord
+      </a>        
+    </div>
+  </div>
+
+  <script type="module">
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
+
+    if (code) {
+      try {
+        const res = await fetch(`/api/oauth?code=${code}`);
+        const responseText = await res.text();
+
+        if (res.redirected) {
+          window.location.href = res.url;
+        } else {
+          document.getElementById("error").textContent = responseText;
+          document.getElementById("error").style.display = "block";
+        }
+      } catch (err) {
+        console.error("OAuth error:", err);
+        document.getElementById("error").textContent = "Wystąpił błąd po stronie serwera.";
+        document.getElementById("error").style.display = "block";
+      }
+    }
+  </script>
+  
+</body>
+</html>

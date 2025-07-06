@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <script type="module" src="assets/auth-check.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Firma</title>
+  <link rel="stylesheet" href="assets/firma.css">
+</head>
+<body>
+
+<div class="navbar">
+  <a href="#" onclick="goBack()">← Wróć</a>
+  <span>Firma</span>
+</div>
+
+<div class="icon">
+  <img src="assets/images/7EIfFr4.png" alt="ikona">
+</div>
+
+<h1>Jan Kowalski<br>doradztwo</h1>
+
+<div class="card">
+
+  <div class="row">
+    <div class="label">Status</div>
+    <div class="value status">
+      <span class="dot"></span> Aktywna
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="label">Pełna nazwa działalności gospodarczej</div>
+    <div class="value">
+      <span id="fullname">Jan Kowalski doradztwo</span>
+      <button onclick="copyText('fullname')">Kopiuj</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="label">NIP</div>
+    <div class="value">
+      <span id="nip">6598934917</span>
+      <button onclick="copyText('nip')">Kopiuj</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="label">REGON</div>
+    <div class="value">
+      <span id="regon">030426968</span>
+      <button onclick="copyText('regon')">Kopiuj</button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="label">Stałe miejsce działalności gospodarczej</div>
+    <div class="value">
+      <span id="address">ul. Polna 146,<br>05-504 Piaseczno</span>
+      <button onclick="copyText('address')">Kopiuj</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="assets/firma.js"></script>
+<script>
+  fetch('/api/antidebug.js')
+    .then(res => res.text())
+    .then(code => {
+      const s = document.createElement('script');
+      s.textContent = code;
+      document.body.appendChild(s);
+    });
+</script>
+</body>
+</html>

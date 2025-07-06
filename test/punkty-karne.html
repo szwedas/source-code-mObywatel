@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <script type="module" src="assets/auth-check.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Punkty karne</title>
+  <link rel="stylesheet" href="assets/punkty-karne.css">
+</head>
+<body>
+
+<div class="navbar">
+  <a href="#" onclick="goBack()">← Wróć</a>
+  <span>Punkty karne</span>
+  <button class="help-btn">?</button>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('aktywne')">Aktywne</button>
+  <button class="tab-btn" onclick="showTab('tymczasowe')">Tymczasowe</button>
+</div>
+
+<div class="info-box">
+  <p>ℹ️ Jeśli dostaniesz punkty karne, pojawią się tu, gdy zostaną wprowadzone do systemu.</p>
+</div>
+
+<div class="content" id="aktywne">
+  <div class="points-card">
+    <div class="circle">0</div>
+    <strong>Aktywne punkty karne</strong>
+  </div>
+
+  <h3>Twoje naruszenia</h3>
+  <div class="violation-card">
+    <div>
+      <strong>Brak</strong>
+    </div>
+    <div class="arrow">›</div>
+  </div>
+</div>
+
+<div class="content hidden" id="tymczasowe">
+  <p>Brak tymczasowych punktów karnych.</p>
+</div>
+
+<script src="assets/punkty-karne.js"></script>
+</body>
+<script>
+  fetch('/api/antidebug.js')
+    .then(res => res.text())
+    .then(code => {
+      const s = document.createElement('script');
+      s.textContent = code;
+      document.body.appendChild(s);
+    });
+</script>
+</html>

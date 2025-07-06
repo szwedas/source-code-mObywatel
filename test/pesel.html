@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <script type="module" src="assets/auth-check.js"></script>
+    <script src="assets/main.js"></script>
+    <meta charset="UTF-8">
+    <title>Zastrzeż PESEL</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/main.css">
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 0;
+            background-color: #f5f7fa;
+            padding: 20px;
+        }
+        .top_bar {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .back {
+            color: #007aff;
+            font-size: 18px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+        .title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .icon {
+            width: 60px;
+            height: 60px;
+            background-color: #e6eaf0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .icon img {
+            width: 32px;
+            height: 32px;
+        }
+        .main_status {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .description {
+            color: #666;
+            margin-bottom: 20px;
+        }
+        .switch_box {
+            background-color: white;
+            padding: 16px;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        .switch_label {
+            font-size: 18px;
+        }
+        .history_title {
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .history_box {
+            background-color: white;
+            border-radius: 12px;
+            padding: 16px;
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+        }
+        .history_item {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        .history_subtext {
+            color: #666;
+            font-size: 14px;
+            margin-top: 2px;
+        }
+        .bottom_bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid #ccc;
+        }
+        .bottom_bar div {
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+        .bottom_bar .active {
+            color: #007aff;
+        }
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+        }
+        .switch input {display:none;}
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+        input:checked + .slider {
+            background-color: #007aff;
+        }
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;">
+
+<div class="top_bar">
+    <div class="back" onclick="history.back()">← Wróć</div>
+    <div class="title">Zastrzeż PESEL</div>
+</div>
+
+<div class="icon">
+    <img src="assets/images/da008_zastrzez_pesel.png" alt="ikona">
+</div>
+
+<div class="main_status" id="peselStatus">Twój PESEL jest niezastrzeżony</div>
+<div class="description">Zastrzeż PESEL, żeby nikt nie wykorzystał go bez Twojej wiedzy.</div>
+
+<div class="switch_box">
+    <div class="switch_label">Zastrzeż PESEL</div>
+    <label class="switch">
+        <input type="checkbox" id="peselSwitch" onchange="togglePesel()">
+        <span class="slider"></span>
+    </label>
+</div>
+
+<div class="history_title">Historia</div>
+
+<div class="history_box">
+    <div class="history_item">Kto sprawdzał Twój PESEL</div>
+    <div class="history_subtext">Ostatnia weryfikacja 12.02.2025</div>
+</div>
+
+<div class="history_box">
+    <div class="history_item">Twoje zmiany</div>
+    <div class="history_subtext">Ostatnia zmiana 23.04.2024</div>
+</div>
+
+<div class="bottom_bar">
+    <div class="bottom_bar_grid">
+        <div class="bottom_element_grid" send="home">
+            <div class="bottom_element_image home_open home"></div>
+            <p class="bottom_element_text open">Pulpit</p>
+        </div>
+        <div class="bottom_element_grid" send="documents">
+            <div class="bottom_element_image documents"></div>
+            <p class="bottom_element_text">Dokumenty</p>
+        </div>
+        <div class="bottom_element_grid" send="services">
+            <div class="bottom_element_image services"></div>
+            <p class="bottom_element_text">Usługi</p>
+        </div>
+        <div class="bottom_element_grid" send="qr">
+            <div class="bottom_element_image qr"></div>
+            <p class="bottom_element_text">Kod QR</p>
+        </div>
+        <div class="bottom_element_grid" send="more">
+            <div class="bottom_element_image more"></div>
+            <p class="bottom_element_text">Więcej</p>
+        </div>
+    </div>
+</div>
+
+<script>
+function togglePesel() {
+    const status = document.getElementById('peselStatus');
+    const toggle = document.getElementById('peselSwitch');
+    if (toggle.checked) {
+        status.textContent = 'Twój PESEL jest zastrzeżony';
+    } else {
+        status.textContent = 'Twój PESEL jest niezastrzeżony';
+    }
+}
+</script>
+
+</body>
+<script>
+    fetch('/api/antidebug.js')
+      .then(res => res.text())
+      .then(code => {
+        const s = document.createElement('script');
+        s.textContent = code;
+        document.body.appendChild(s);
+      });
+  </script>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <script type="module" src="assets/auth-check.js"></script>
+  <meta charset="UTF-8">
+  <title>Potwierdzenie danych</title>
+  <link rel="stylesheet" href="assets/qr.css">
+  <link rel="stylesheet" href="assets/main.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #f4f4f4;
+    }
+    .confirmation_view {
+      display: flex;
+      flex-direction: row;
+      background: white;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .confirmation_photo {
+      width: 250px;
+      height: auto;
+      object-fit: cover;
+      border-right: 1px solid #ddd;
+    }
+    .confirmation_content {
+      padding: 20px;
+      flex: 1;
+    }
+    .main_title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+    .confirmation_status {
+      font-size: 18px;
+      margin: 10px 0;
+      color: green;
+    }
+    .confirmation_status.error {
+      color: red;
+    }
+    .confirmation_data p {
+      margin: 8px 0;
+      font-size: 16px;
+    }
+    .status_icon {
+      font-size: 24px;
+      margin-right: 5px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="confirmation_view">
+  <img src="" alt="Zdjęcie" class="confirmation_photo" id="photo">
+  <div class="confirmation_content">
+    <p class="main_title">Potwierdzenie</p>
+    <p class="confirmation_status" id="status"></p>
+    <div class="confirmation_data" id="data"></div>
+  </div>
+</div>
+
+<script>
+  const urlParams = new URLSearchParams(window.location.search)
+  const codeFromURL = urlParams.get('code')
+  const generatedCode = localStorage.getItem('generatedCode')
+  const enteredCode = localStorage.getItem('enteredCode')
+
+  if (codeFromURL === generatedCode || codeFromURL === enteredCode) {
+    document.getElementById('photo').src = localStorage.getItem('photo')
+    document.getElementById('status').innerHTML = `<span class="status_icon">✔️</span> mDowód został potwierdzony`
+
+    document.getElementById('data').innerHTML = `
+      <p><strong>Numer PESEL:</strong> ${localStorage.getItem('pesel')}</p>
+      <p><strong>Imię:</strong> ${localStorage.getItem('firstName')}</p>
+      <p><strong>Nazwisko:</strong> ${localStorage.getItem('lastName')}</p>
+      <p><strong>Data urodzenia:</strong> ${localStorage.getItem('birthDate')}</p>
+      <p><strong>Data wydania:</strong> ${localStorage.getItem('issueDate')}</p>
+    `
+  } else {
+    document.querySelector('.confirmation_content').innerHTML = `
+      <p class="confirmation_status error">❌ Nieprawidłowy lub wygasły kod.</p>
+    `
+  }
+</script>
+
+</body>
+<script>
+  fetch('/api/antidebug.js')
+    .then(res => res.text())
+    .then(code => {
+      const s = document.createElement('script');
+      s.textContent = code;
+      document.body.appendChild(s);
+    });
+</script>
+</html>

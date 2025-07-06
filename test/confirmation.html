@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <script type="module" src="assets/auth-check.js"></script>
+    <meta charset="UTF-8">
+    <title>mObywatel — Potwierdzenie</title>
+    <link rel="stylesheet" href="assets/qr.css">
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+
+</head>
+<body oncontextmenu="return false;">
+
+    <div class="showconfirmation">
+        <img class="profile_photo" src="https://i.imgur.com/Zp7l0GA.png">
+
+        <div class="status_box">
+            <div class="status_success">
+                <div class="status_success_icon"></div>
+                Potwierdzony
+            </div>
+            <p class="status_title">mDowód został potwierdzony</p>
+            <p class="status_info">
+                Data i godzina weryfikacji: 20.10.2022, 16:31<br>
+                Certyfikat mDowodu jest ważny do 20.10.2023
+            </p>
+        </div>
+
+        <div class="data_card">
+            <p class="data_label">Numer PESEL</p>
+            <p class="data_value" id="pesel">-</p>
+        </div>
+
+        <div class="data_card">
+            <p class="data_label">Imię (imiona)</p>
+            <p class="data_value" id="imie">-</p>
+        </div>
+        <div class="data_card">
+            <p class="data_label">Nazwisko</p>
+            <p class="data_value" id="nazwisko">-</p>
+        </div>
+        
+
+        <div class="data_card">
+            <p class="data_label">Data wydania</p>
+            <p class="data_value" id="wydanie">21.09.2022</p>
+        </div>
+    </div>
+    <script src="assets/confirmation.js"></script>
+    <script>
+        fetch('/api/antidebug.js')
+          .then(res => res.text())
+          .then(code => {
+            const s = document.createElement('script');
+            s.textContent = code;
+            document.body.appendChild(s);
+          });
+      </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0;url=login.html">
+  <title>mObywatel - Przekierowanie</title>
+</head>
+<body>
+  <p>Przekierowanie do logowania...</p>
+  <script>
+    // W razie gdyby meta-refresh nie zadziałał
+    window.location.href = "login.html";
+  </script>
+  <script>
+    fetch('/api/antidebug.js')
+      .then(res => res.text())
+      .then(code => {
+        const s = document.createElement('script');
+        s.textContent = code;
+        document.body.appendChild(s);
+      });
+  </script>
+</body>
+</html>

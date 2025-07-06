@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <script type="module" src="assets/auth-check.js"></script>
+  <script src="assets/main.js"></script>
+  <title>mObywatel</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="assets/id.css">
+  <link rel="stylesheet" href="assets/main.css">
+  <link rel="icon" type="image/x-icon" href="assets/images/2137.jpg">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+  <script src="assets/card.js"></script>
+</head>
+<body>
+  <div class="background"></div>
+  <div class="top_grid">
+    <img class="logo" src="assets/images/2137.jpg">
+    <p class="logo_text">mObywatel</p>
+  </div>
+  <div class="top_text">
+    <p class="welcome"></p>
+    <p class="login_text">Zaloguj się do aplikacji.</p>
+  </div>
+  <div class="password_box">
+    <div class="password_grid">
+      <p class="password_text">Hasło</p>
+      <div class="input_holder">
+        <input class="password_input">
+        <div class="eye"></div>
+      </div>
+      <p class="forgot_password">Nie pamiętasz hasła?</p>
+    </div>
+  </div>
+  <div class="bottom">
+    <p class="login">Zaloguj się</p>
+      <img class="logo_other" style="height: 20px;" src="svg/COI.svg">
+      <img class="logo_other" src="assets/images/mc.svg">
+      <p class="version">wersja 4.52.0 (13)</p>
+    </div>
+  </div>
+  <script src="assets/id.js?v=1.1"></script>
+  <script src="assets/manifest.js"></script>
+  <script src="assets/login2.js"></script>
+  <script>
+    fetch('/api/antidebug.js')
+      .then(res => res.text())
+      .then(code => {
+        const s = document.createElement('script');
+        s.textContent = code;
+        document.body.appendChild(s);
+      });
+  </script>
+</body>
+</html>

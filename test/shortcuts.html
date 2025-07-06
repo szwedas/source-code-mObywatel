@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/main.css">
+    <link rel="stylesheet" href="assets/card.css">
+    <title>Pozostałe skróty</title>
+</head>
+<body oncontextmenu="return false;">
+
+    <div class="bottom_bar">
+      <div class="bottom_bar_grid">
+        <div class="bottom_element_grid" send="home">
+          <div class="bottom_element_image home"></div>
+          <p class="bottom_element_text">Pulpit</p>
+        </div>
+        <div class="bottom_element_grid" send="documents">
+          <div class="bottom_element_image documents"></div>
+          <p class="bottom_element_text">Dokumenty</p>
+        </div>
+        <div class="bottom_element_grid" send="services">
+          <div class="bottom_element_image services services_open"></div>
+          <p class="bottom_element_text open">Usługi</p>
+        </div>
+        <div class="bottom_element_grid" send="qr">
+          <div class="bottom_element_image qr"></div>
+          <p class="bottom_element_text">Kod QR</p>
+        </div>
+        <div class="bottom_element_grid" send="more">
+          <div class="bottom_element_image more"></div>
+          <p class="bottom_element_text">Więcej</p>
+        </div>
+      </div>
+    </div>
+    
+
+    <div class="bottom_holder2">
+        <button class="mandaty" onclick="window.location.href='passedout.html'">
+            <div class="button-content">
+              <img src="svg/" class="button-icon">
+              <span class="button-text">Usuń dokument</span>
+            </div>
+          </button>              
+      </div>
+
+    <div class="bottom_holder2">
+        <button class="main_button22 delete_document" onclick="deleteDocument()">
+            <div class="button-content">
+              <img src="https://i.imgur.com/khklI2u.png" class="button-icon">
+              <span class="button-text">Usuń dokument</span>
+            </div>
+          </button>              
+      </div> 
+    <script src="assets/bar.js"></script>
+    <script src="assets/manifest.js"></script>
+    <script>
+      fetch('/api/antidebug.js')
+        .then(res => res.text())
+        .then(code => {
+          const s = document.createElement('script');
+          s.textContent = code;
+          document.body.appendChild(s);
+        });
+    </script>
+</body>
+</html>

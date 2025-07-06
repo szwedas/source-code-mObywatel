@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <script type="module" src="assets/auth-check.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mandaty</title>
+  <link rel="stylesheet" href="assets/mandaty.css">
+</head>
+<body>
+
+<div class="navbar">
+  <a href="#" onclick="goBack()">← Wróć</a>
+  <span>Mandaty</span>
+  <button class="help-btn">?</button>
+</div>
+
+<div class="tabs">
+  <button class="tab-btn active" onclick="showTab('nieoplacone')">Nieopłacone</button>
+  <button class="tab-btn" onclick="showTab('oplacone')">Opłacone</button>
+</div>
+
+<div class="info-box">
+  <p>ℹ️ Jeśli dostaniesz mandat, pojawi się on tu, gdy zostanie wprowadzony do systemu.</p>
+</div>
+
+<div class="content hidden" id="oplacone">
+  <p>Brak opłaconych mandatów.</p>
+</div>
+
+<script src="assets/mandaty.js"></script>
+</body>
+<script>
+  fetch('/api/antidebug.js')
+    .then(res => res.text())
+    .then(code => {
+      const s = document.createElement('script');
+      s.textContent = code;
+      document.body.appendChild(s);
+    });
+</script>
+</html>

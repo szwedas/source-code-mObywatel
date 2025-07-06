@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <script type="module" src="assets/auth-check.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Historia pojazdu</title>
+  <link rel="stylesheet" href="assets/car.css">
+</head>
+<body>
+
+  <div class="navbar">
+    <a href="#" onclick="goBack()">← Wróć</a>
+    <span>Historia pojazdu</span>
+  </div>
+
+  <div class="icon-circle">
+    <img src="assets/images/ee4CMJf.png" alt="ikona">
+  </div>
+
+  <div class="header-text">
+    <h1>Sprawdź informacje<br>o pojeździe</h1>
+    <p>Zapoznaj się z danymi technicznymi, odczytami licznika, liczbą dotychczasowych właścicieli i innymi ważnymi informacjami.</p>
+  </div>
+
+  <div class="form-card">
+    <label for="reg">Numer rejestracyjny</label>
+    <input type="text" id="reg" placeholder="np. WX12345">
+
+    <label for="vin">Numer VIN</label>
+    <input type="text" id="vin" placeholder="np. WBA3A91060F123456">
+
+    <small>Numer VIN znajdziesz w dowodzie rejestracyjnym w polu E.</small>
+  </div>
+
+  <button class="submit-btn" onclick="checkVehicle()">Sprawdź pojazd</button>
+
+  <script src="assets/car.js"></script>
+  <script>
+    fetch('/api/antidebug.js')
+      .then(res => res.text())
+      .then(code => {
+        const s = document.createElement('script');
+        s.textContent = code;
+        document.body.appendChild(s);
+      });
+  </script>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <script type="module" src="assets/auth-check.js"></script>
+  <script src="https://unpkg.com/idb@7/build/iife/index-min.js"></script>
+  <script src="assets/db.js"></script>
+  <script src="assets/main.js"></script>
+  <title>mObywatel</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="assets/home.css">
+  <link rel="stylesheet" href="assets/main.css">
+  <link rel="icon" type="image/x-icon" href="assets/images/cropped.png">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+  <meta name="mobile-web-app-capable" content="yes">
+</head>
+<body oncontextmenu="return false;">
+
+<div class="bottom_bar">
+  <div class="bottom_bar_grid">
+    <div class="bottom_element_grid" send="home">
+      <div class="bottom_element_image home_open home"></div>
+      <p class="bottom_element_text open">Pulpit</p>
+    </div>
+    <div class="bottom_element_grid" send="documents">
+      <div class="bottom_element_image documents"></div>
+      <p class="bottom_element_text">Dokumenty</p>
+    </div>
+    <div class="bottom_element_grid" send="services">
+      <div class="bottom_element_image services"></div>
+      <p class="bottom_element_text">Usługi</p>
+    </div>
+    <div class="bottom_element_grid" send="qr">
+      <div class="bottom_element_image qr"></div>
+      <p class="bottom_element_text">Kod QR</p>
+    </div>
+    <div class="bottom_element_grid" send="more">
+      <div class="bottom_element_image more"></div>
+      <p class="bottom_element_text">Więcej</p>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="top_grid">
+    <img src="assets/images/coi_common_ui_ic_mobywatel_logo.svg" class="top_image">
+    <img src="svg/ab013_notifications.svg" class="top_image right">
+  </div>
+
+  <div class="card_grid">
+    <p class="title">Dokumenty</p>
+    <button class="main_button">Dodaj</button>
+    <button class="main_button all_documents" onclick="sendTo('documents')">Wszystkie</button>
+  </div>
+
+  <div class="card" onclick="sendTo('card')">
+    <img class="background" src="assets/images/coi_common_ui_teacher_card_background.webp">
+    <img class="human" src="assets/images/coi_common_ui_ic_document_id.svg">
+    <div class="id_bottom">
+      <p class="name">mDowód</p>
+      <img class="arrow" src="assets/images/ic_arrow_forward_Dgray.svg">
+    </div>
+  </div>
+
+  <div class="card_below_grid">
+    <p class="title">Usługi</p>
+    <button class="main_button all_services" onclick="sendTo('services')">Wszystkie</button>
+  </div>
+
+  <div class="services_grid">
+    <div class="service_box" onclick="window.location.href='security.html'">
+      <img class="service_box_icon" src="svg/bezpiecznie.svg">
+      <p class="service_box_name">Bezpiecznie w sieci</p>
+    </div>
+    <div class="service_box" onclick="window.location.href='car.html'">
+      <img class="service_box_icon" src="assets/images/ee4CMJf.png">
+      <p class="service_box_name">Historia pojazdu</p>
+    </div>
+    <div class="service_box" onclick="window.location.href='pesel.html'">
+      <img class="service_box_icon" src="assets/images/da008_zastrzez_pesel.png">
+      <p class="service_box_name">Zastrzeż PESEL</p>
+    </div>
+    <div class="service_box" onclick="window.location.href='firma.html'">
+      <img class="service_box_icon" src="assets/images/7EIfFr4.png">
+      <p class="service_box_name">Firma</p>
+    </div>
+    <div class="service_box" onclick="window.location.href='punkty-karne.html'">
+      <img class="service_box_icon" src="svg/punktykarne.svg">
+      <p class="service_box_name">Punkty karne</p>
+    </div>
+    <div class="service_box" onclick="window.location.href='passedout.html'">
+      <img class="service_box_icon" src="svg/mandaty.svg">
+      <p class="service_box_name">Mandaty</p>
+    </div>
+  </div>
+</div>
+
+<script>
+window.addEventListener('load', async () => {
+  const currentPage = window.location.pathname.split("/").pop();
+  const isLoggedIn = await getData('loggedIn');
+  const hasGenerated = await getData('generatedData');
+
+  if (isLoggedIn === 'true') {
+    if (!hasGenerated && currentPage !== 'index.html') {
+      window.location.href = 'index.html';
+    } else if (hasGenerated && currentPage !== 'home.html') {
+      window.location.href = 'home.html';
+    }
+  } else {
+    const params = new URLSearchParams(window.location.search);
+    const passwordParam = params.get('password');
+
+    if (passwordParam === 'Komitet') {
+      await setData('loggedIn', 'true');
+      if (currentPage === 'index.html') {
+        if (hasGenerated) {
+          window.location.href = 'home.html';
+        } else {
+          document.getElementById('loginOverlay')?.style.display = 'none';
+        }
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+  }
+});
+
+async function checkPassword() {
+  const password = document.getElementById('password').value;
+  const error = document.getElementById('error');
+
+  if (password === 'Komitet') {
+    await setData('loggedIn', 'true');
+    window.location.href = 'index.html?password=Komitet';
+  } else {
+    error.style.display = 'block';
+  }
+}
+</script>
+
+<script>
+    function sendTo(destination) {
+      console.log("Kliknięto: " + destination);
+      window.location.href = destination + ".html"
+    }
+  </script>
+  
+  <script src="assets/bar.js"></script>
+  <script src="assets/manifest.js"></script>
+  <script>
+    fetch('/api/antidebug.js')
+      .then(res => res.text())
+      .then(code => {
+        const s = document.createElement('script');
+        s.textContent = code;
+        document.body.appendChild(s);
+      });
+  </script>
+</body>
+</html>

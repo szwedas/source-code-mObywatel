@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <script type="module" src="assets/auth-check.js"></script>
+    <meta charset="UTF-8">
+    <title>mObywatel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=0.8, user-scalable=no">
+
+    <link rel="stylesheet" href="assets/qr.css">
+    <link rel="stylesheet" href="assets/main.css">
+
+    <!-- Biblioteki -->
+    <script src="https://cdn.jsdelivr.net/npm/jsqr/dist/jsQR.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs/qrcode.min.js"></script>
+
+    <!-- Twój skrypt -->
+    <script defer src="assets/main.js"></script>
+</head>
+<body oncontextmenu="return false;">
+
+  <div class="bottom_bar">
+    <div class="bottom_bar_grid">
+      <div class="bottom_element_grid" send="home">
+        <div class="bottom_element_image home_open home"></div>
+        <p class="bottom_element_text open">Pulpit</p>
+      </div>
+      <div class="bottom_element_grid" send="documents">
+        <div class="bottom_element_image documents"></div>
+        <p class="bottom_element_text">Dokumenty</p>
+      </div>
+      <div class="bottom_element_grid" send="services">
+        <div class="bottom_element_image services"></div>
+        <p class="bottom_element_text">Usługi</p>
+      </div>
+      <div class="bottom_element_grid" send="qr">
+        <div class="bottom_element_image qr"></div>
+        <p class="bottom_element_text">Kod QR</p>
+      </div>
+      <div class="bottom_element_grid" send="more">
+        <div class="bottom_element_image more"></div>
+        <p class="bottom_element_text">Więcej</p>
+      </div>
+    </div>
+  </div>
+
+
+<div class="container">
+    <p class="main_title">Kod QR</p>
+    <p class="description">Wybierz, co chcesz zrobić</p>
+    <div class="action_grid">
+      <div class="action scan">
+        <img class="action_image" src="assets/images/checkbo.png">
+        <div class="action_text">
+            <p class="action_title">Zeskanuj kod QR</p>
+            <p class="action_subtitle">Zaloguj się lub potwierdź swoje dane.</p>
+        </div>
+        <img class="arrow" src="svg/arrow.svg">
+      </div>
+      
+      <div class="action show">
+        <img class="action_image" src="svg/ai003_check_document.svg">
+        <div class="action_text">
+            <p class="action_title">Pokaż kod QR</p>
+            <p class="action_subtitle">Sprawdź dokument innej osoby.</p>
+        </div>
+        <img class="arrow" src="svg/arrow.svg">
+      </div>
+      
+    </div>
+</div>
+
+<!-- Kontener na podgląd kamery -->
+
+<script src="assets/bar.js"></script>
+<script src="assets/qr.js"></script>
+</body>
+<script>
+  fetch('/api/antidebug.js')
+    .then(res => res.text())
+    .then(code => {
+      const s = document.createElement('script');
+      s.textContent = code;
+      document.body.appendChild(s);
+    });
+</script>
+</html>
