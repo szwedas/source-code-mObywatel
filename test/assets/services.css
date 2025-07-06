@@ -1,0 +1,109 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  header img {
+    width: 40px;
+    margin-right: 10px;
+  }
+  
+  h1 {
+    font-size: 22px;
+    margin: 0;
+  }
+  
+  .container {
+    padding: 20px;
+  }
+  
+  .card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    cursor: pointer;
+    transition: 0.3s;
+  }
+  
+  .card:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .card h2 {
+    font-size: 18px;
+    margin: 0 0 5px;
+  }
+  
+  .card p {
+    margin: 0;
+    color: #666;
+  }
+  
+  .notification {
+    background: #e8f0fe;
+    color: #333;
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 14px;
+    margin-top: 20px;
+  }
+  
+  .notification a {
+    color: #1a73e8;
+    text-decoration: none;
+    font-weight: bold;
+  }
+  
+  .bottom-menu {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px 0;
+    border-top: 1px solid #ddd;
+    background: #fff;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+  }
+  
+  .bottom-menu div {
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+  }
+  
+  .bottom-menu div.active {
+    color: #1a73e8;
+  }
+  
+  .home-container {
+    text-align: center;
+    padding: 50px;
+  }
+  
+  .home-container button {
+    padding: 15px 25px;
+    font-size: 18px;
+    background-color: #ff4c7d;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+  }
+  
+  .home-container button:hover {
+    background-color: #e03b6d;
+  }
+  

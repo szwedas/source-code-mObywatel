@@ -1,0 +1,108 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f9f9f9;
+  color: #000;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  font-size: 17px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.navbar a {
+  color: #007aff;
+  text-decoration: none;
+  margin-right: 10px;
+}
+
+.navbar span {
+  font-weight: 500;
+}
+
+.icon-circle {
+  background: #e0dcff; /* jasny fiolet */
+  border-radius: 50%;
+  width: 72px;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.header-text {
+  text-align: center;
+  padding: 0 20px;
+}
+
+.header-text h1 {
+  font-size: 26px;
+  margin: 10px 0;
+}
+
+.header-text p {
+  color: #555;
+  font-size: 16px;
+}
+
+.card {
+  background: #fff;
+  margin: 20px;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.item {
+  display: flex;
+  padding: 16px;
+  border-bottom: 1px solid #ddd;
+  cursor: pointer;
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.item-left {
+  font-size: 22px;
+  margin-right: 12px;
+}
+
+.item-right h2 {
+  font-size: 18px;
+  margin: 0 0 6px;
+}
+
+.item-right p {
+  margin: 0;
+  color: #555;
+  font-size: 14px;
+}
+
+.support {
+  background: #e8f1ff;
+  padding: 16px;
+  margin: 20px;
+  border-radius: 12px;
+}
+
+.support h3 {
+  margin: 0 0 8px;
+}
+
+.support p {
+  margin: 0 0 10px;
+  color: #333;
+}
+
+.support a {
+  color: #007aff;
+  text-decoration: none;
+  font-weight: 500;
+}

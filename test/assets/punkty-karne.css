@@ -1,0 +1,140 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  background: #f9f9f9;
+  color: #000;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px;
+  font-size: 17px;
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+}
+
+.navbar a {
+  color: #007aff;
+  text-decoration: none;
+}
+
+.navbar span {
+  font-weight: 500;
+}
+
+.help-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #666;
+  cursor: pointer;
+}
+
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  background: #f0f0f0;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.tab-btn.active {
+  background: #fff;
+  font-weight: 600;
+  border-bottom: 2px solid #007aff;
+}
+
+.info-box {
+  background: #e8f2fd;
+  padding: 12px 16px;
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+
+.content {
+  padding: 0 16px 20px;
+}
+
+h3 {
+  font-size: 16px;
+  margin: 20px 0 10px;
+}
+
+.points-card {
+  background: #fff;
+  border-radius: 15px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.points-card .circle {
+  width: 50px;
+  height: 50px;
+  background: #fff;
+  border: 3px solid green;
+  color: green;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.violation-card {
+  background: #fff;
+  border-radius: 15px;
+  padding: 14px 16px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.violation-card p {
+  margin: 4px 0 0;
+  font-size: 14px;
+}
+
+.arrow {
+  font-size: 20px;
+  color: #999;
+}
+
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  background: #fff;
+  border-top: 1px solid #ddd;
+}
+
+.nav-item {
+  flex: 1;
+  text-align: center;
+  padding: 8px 0;
+  font-size: 13px;
+  color: #555;
+}
+
+.nav-item.active {
+  color: #007aff;
+}
+
+.hidden {
+  display: none;
+}
