@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "@supabase/supabase-js": "^2.49.4",
+    "discord": "^0.8.2",
+    "discord.js": "^14.19.3",
+    "dotenv": "^16.5.0",
+    "jsonwebtoken": "^9.0.2",
+    "node-fetch": "^2.7.0"
+  }
+}
